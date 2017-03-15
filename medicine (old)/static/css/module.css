@@ -1,0 +1,94 @@
+body {
+    height: 100vh;
+    background: #cae1ff;
+}
+
+div#result{
+    background: white;   
+    
+}
+.doctor {
+    font-size: 28px;
+}
+
+.autocomplete {
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.autocomplete .ac-users {
+    padding-top: 10px;
+}
+
+.autocomplete .ac-users .chip {
+    -ms-flex: auto;
+    flex: auto;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.autocomplete .ac-users .chip:last-child {
+    margin-right: 5px;
+}
+
+.autocomplete .ac-dropdown .ac-hover {
+    background: #eee;
+}
+
+.autocomplete .ac-input {
+    -ms-flex: 1;
+    flex: 1;
+    min-width: 150px;
+    padding-top: 0.6rem;
+}
+
+.autocomplete .ac-input input {
+    height: 2.4rem;
+}
+.check-btn{
+    //float:right;
+}
+
+span.mark{
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+table{
+    table-layout: fixed;
+}
+//table#past-illness th {overflow: hidden;}
+table#past-illness th:nth-of-type(1) {width:100px;}/*Setting the width of column 1.*/
+table#past-illness th:nth-of-type(2) {width:50px;}/*Setting the width of column 2.*/
+
+table#past-illness th:nth-of-type(3) {width:100px;}/*Setting the width of column 2.*/
+
+table#add-medicine th:nth-of-type(1) {width:40px;}/*Setting the width of column 2.*/
+table#add-medicine th:nth-of-type(2) {width:80px;}/*Setting the width of column 2.*/
+//table#add-medicine th:nth-of-type(3) {width:120px;}/*Setting the width of column 2.*/
+table#add-medicine th:nth-of-type(4) {width:80px;}/*Setting the width of column 2.*/
+table#add-medicine th:nth-of-type(5) {width:80px;}/*Setting the width of column 2.*/
+table#add-medicine th:nth-of-type(6) {width:80px;}/*Setting the width of column 2.*/
+table#add-medicine th:nth-of-type(7) {width:80px;}/*Setting the width of column 2.*/
+
+table.index-add tr:second-child{
+    counter-reset: rowNumber;
+}
+
+table.index-add tr {
+    counter-increment: rowNumber;
+}
+
+table.index-add tr td:first-child::before {
+    content: counter(rowNumber) '.';
+    min-width: 1em;
+    margin-right: 0.5em;
+}
+input[type='number'], input.ill-name{
+    margin-bottom: 4px;
+}
+
+
+.check_data{
+    padding-top:50px;
+}

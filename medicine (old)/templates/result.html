@@ -1,0 +1,60 @@
+<html>
+
+<head>
+    <title>Computer physician order entry</title>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='materialize/css/materialize.min.css')}}" media="screen,projection" />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/module.css')}}">
+
+    <meta charset="utf-8">
+</head>
+
+
+<body style="background:white">
+    <div class="container" >
+
+        <div class="row">
+            <table class="striped" id="result">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>受試者</th>
+                        <th>開始時間</th>
+                        <th>結束時間</th>
+                        <th>對應題目</th>
+                        <th>症狀</th>
+                        <th>症狀中文</th>
+                        <th>用藥</th>
+                        <th>用量</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in result %}
+                    <tr>
+                        <td>{{item[0]}}</td>
+                        <td>{{item[1]}}</td>
+                        <td>{{item[2]}}</td>
+                        <td>{{item[3]}}</td>
+                        <td>{{item[4]}}</td>
+                        <td>{{item[5]}}</td>
+                        <td>{{item[6]}}</td>
+                        <td>{{item[7]}}</td>
+                        <td>{{item[8]}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='materialize/js/materialize.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/jquery.materialize-autocomplete.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/underscore.min.js')}}"></script>
+
+</body>

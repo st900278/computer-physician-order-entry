@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Computer physician order entry</title>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='materialize/css/materialize.min.css')}}" media="screen,projection" />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/module.css')}}">
+
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="row">
+            <div class="card-panel doctor">日期：{{date}} 醫師：郭博昀 科別：內科</div>
+            <div class="input-field col s12">
+            <div class="row">
+                <div class="col s5">
+                    <div class="card white darken-1">
+                        <div class="card-content grey-text text-darken-2">
+                            <span class="card-title">病患資料</span>
+                            <h6 id="appointment-order">掛號號碼：{{status}}</h6>
+                            <h6 id="name">姓名：{{patient['name']}}</h6>
+                            <h6 id="year-old">年齡：{{patient['age']}}</h6>
+                            <h6 id="birthday">生日：{{patient['birth']}}</h6>
+                            <h6 id="gender">性別：{{patient['gender'].decode('utf-8')}}</h6>
+                        </div>
+                    </div>
+
+                    <div class="card white darken-1">
+                        <div class="card-content grey-text text-darken-2">
+                            <span class="card-title">個人病史</span>
+                            <table class="highlight" id="past-illness">
+                                <thead>
+                                    <tr>
+                                        <th>看診日</th>
+                                        <th>科別</th>
+                                        <th>疾病</th>
+                                        <th>使用藥物</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in past_list %}
+                                    <tr>
+                                        <td>{{item['sick_date']}}</td>
+                                        <td>家醫</td>
+                                        <td>{{item['illness']}}</td>
+                                        
+                                        <td class="history">{{item['medicine'][0]}}</td>
+                                        
+                                    </tr>
+                                    {% if item['medicine']|length > 1 %}
+                                        {% for x in range(1, item['medicine']|length) %}
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+
+                                            <td class="history">{{item['medicine'][x]}}</td>
+
+                                        </tr>
+                                        {% endfor %}
+                                    {% endif %}
+                                    {% for x in item['prohibit'] %}
+                                    <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td>禁止：</td>
+
+                                            <td class="prohibit">{{x}}</td>
+
+                                        </tr>
+                                    
+                                    {% endfor %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col s7">
+                    <div class="card white darken-1">
+                        <div class="card-content grey-text text-darken-2">
+                            <!--<div class="row">
+                                <div class="col s2">疾病：</div>
+                                <div class="col s10">
+                                    {{ patient['illness'] }}
+                                </div>
+                            </div>-->
+                            <div class="row">
+                                <div class="col s2">症狀：</div>
+                                <div class="col s10">
+                                    <div class="autocomplete" id="multiple">
+                                        <div class="ac-users" id="symptom"></div>
+                                        <div class="ac-input">
+                                            <input type="text" id="multipleInput" placeholder="Please input some letters" data-activates="multipleDropdown" data-beloworigin="true" autocomplete="off">
+                                        </div>
+                                        <ul id="multipleDropdown" class="dropdown-content ac-dropdown"></ul>
+                                        <input type="hidden" name="multipleHidden" />
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s2">病症主訴：</div>
+                                <div class="input-field col s10">
+                                    <div id="complaint">{{ patient['complaint'] }}</div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col s2">
+                                    過敏藥品:
+                                    <!--
+                                    <div class="switch">
+                                        是否有長期用藥：
+                                        <label>
+                                            沒有
+                                            <input type="checkbox">
+                                            <span class="lever"></span>有
+                                        </label>
+
+
+                                    </div>
+                                    -->
+                                </div>
+                                <div class="col s10 allergy">
+                                    {{ patient['allergy']}}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card white darken-1">
+                        <div class="card-content grey-text text-darken-2">
+                            <span class="card-title">給予藥物</span>
+                            <table class="highlight index-add" id="add-medicine">
+                                <thead>
+                                    <tr>
+                                        <th>項次</th>
+                                        <th>症狀</th>
+                                        <th>藥名</th>
+                                        <th>用量</th>
+                                        <th>單位</th>
+                                        <th>一日幾份</th>
+                                        <th>幾天份</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="medicine">
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col s2 offset-s10">
+                    <button class="btn waves-effect waves-light btn-large send" name="action" id="submit1">確認送出
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='materialize/js/materialize.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/jquery.materialize-autocomplete.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/underscore.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/app.js')}}"></script>
+</body>
+
+</html>

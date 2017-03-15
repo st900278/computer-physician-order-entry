@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Computer physician order entry</title>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='materialize/css/materialize.min.css')}}" media="screen,projection" />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/module.css')}}">
+
+
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="row">
+            <div class="card-panel doctor">日期：2016/9/2 醫師：藤木 科別：內科 {{status}}</div>
+
+            <div class="row">
+                <div class="col s5">
+                    <div class="card white darken-1">
+                        <div class="card-content grey-text text-darken-2">
+                            <span class="card-title">確認選項</span>
+                            <table class="highlight">
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="test1" {% if too_much=='' %}checked disabled{%endif%}/>
+                                        <label for="test1">劑量過高</label>
+                                    </td>
+                                    <td>
+                                        {% if too_much == ''%} 無 {% else %} {{ too_much }} {%endif%}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="test2" {% if no_correspond=='' %}checked disabled{%endif%}/>
+                                        <label for="test2">症狀藥品無對應</label>
+                                    </td>
+                                    <td>
+                                        {% if no_correspond == ''%} 無 {% else %} {{ no_correspond }} {%endif%}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="test3" {% if med_allergy=='' %}checked disabled{%endif%}/>
+                                        <label for="test3">藥物過敏</label>
+                                    </td>
+                                    <td>
+                                        {% if med_allergy == ''%} 無 {% else %} {{ med_allergy }} {%endif%}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="test4" {% if same_med=='' %}checked disabled{%endif%}/>
+                                        <label for="test4">重複用藥</label>
+                                    </td>
+                                    <td>
+                                        {% if same_med == ''%} 無 {% else %} {{ same_med }} {%endif%}
+                                    </td>
+                                </tr>
+                            </table>
+
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="col s7">
+                    <div class="card white darken-1">
+                        <div class="card-content grey-text text-darken-2">
+                            <span class="card-title">給予藥物</span>
+                            <table class="highlight" id="add-medicine">
+                                <thead>
+                                    <tr>
+                                        <th>項次</th>
+                                        <th>症狀</th>
+                                        <th>藥名</th>
+                                        <th>用量</th>
+                                        <th>單位</th>
+                                        <th>一日幾份</th>
+                                        <th>幾天份</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% set counter = 1 %} {% for item in now_med %}
+                                    <tr>
+                                        <td>{{counter}}.</td>
+                                        <td>{{alias[item.symptom]}}</td>
+                                        <td>{{item.med}}</td>
+                                        <td>{{item.amount}}</td>
+                                        <td>錠</td>
+                                        <td>3</td>
+                                        <td>3</td>
+                                    </tr>
+                                    {% set counter = counter+1 %} {% endfor %}
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col s2 offset-s8">
+                    <button class="btn waves-effect waves-light btn-large check-btn red lighten-1" name="action" id="back">
+                        返回，修改藥單
+                    </button>
+                </div>
+                <div class="col s2">
+                    <button class="btn waves-effect waves-light btn-large check-btn" name="action" id="send">無誤，列印藥單
+                        <i class="material-icons right">send</i>
+                    </button>
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='materialize/js/materialize.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/jquery.materialize-autocomplete.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/app2.js')}}"></script>
+</body>
+
+</html>
